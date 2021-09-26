@@ -5,36 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupplyesOfProducts.Views"
         mc:Ignorable="d"
-        Title="Создание подрядчика" Height="400" Width="400">
+        Title="Создать подрядчика" Height="400" Width="400">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25" ></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25" ></RowDefinition>
+            <RowDefinition Height="25"/>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="29"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Имя подрядчика"/>
-        <TextBox x:Name="ProviderName"  Grid.Column="1"   Validation.Error="CreateValidation_Error" >
+        <TextBlock Text="Подрядчик" Grid.Row="0" Grid.Column="0"/>
+
+        <TextBox x:Name="ProviderName"  Grid.Row="0" Grid.Column="1">
             <TextBox.Text>
-                <Binding Path="Name" NotifyOnValidationError="True">
+                <Binding Path="Name">
                     <Binding.ValidationRules>
-                        <ExceptionValidationRule />
+                        <DataErrorValidationRule />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-
-        <TextBlock  x:Name="infoTextBlock" Grid.Row="2" Grid.ColumnSpan="7" Margin="5" FontWeight="Bold" Foreground="red" />
-        <Button x:Name="CreateCadidate" Content="Сохранить изменения" Grid.Row="8" Width="130" Click="CreateProvider_Click"/>
-        <Button x:Name="Cancel" Content="Отмена" Grid.Row="8" Grid.Column="1" Width="130" Click="Cancel_Click"/>
+        <TextBlock  x:Name="infoTextBlock"  Grid.Row="2" Grid.ColumnSpan="7" Margin="5"/>
+        <Button x:Name="CreateProviders" Content="Сохранить изменения" Grid.Row="3" Width="130" Height="25" Click="CreateProvider_Click"/>
+        <Button x:Name="Cancel" Content="Отмена" Grid.Row="3" Grid.Column="1" Width="130"  Height="25" Click="Cancel_Click"/>
     </Grid>
 </Window>

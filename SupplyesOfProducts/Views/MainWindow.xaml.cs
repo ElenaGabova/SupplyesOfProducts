@@ -16,7 +16,7 @@ using SupplyesOfProducts.Database;
 using SupplyesOfProducts.Models;
 using SupplyesOfProducts.Views;
 
-namespace SupplyesOfProducts
+namespace SupplyesOfProducts.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -28,14 +28,14 @@ namespace SupplyesOfProducts
             InitializeComponent();
         }
 
-        private void AddProvider_Click(object sender, RoutedEventArgs e)
+        private void ShowProvider_Click(object sender, RoutedEventArgs e)
         {
-            CreateProvidersWindow window = new CreateProvidersWindow();
+            ShowProvidersWindow window = new ShowProvidersWindow();
             window.Show();
         }
-        private void AddProduct_Click(object sender, RoutedEventArgs e)
+        private void ShowProduct_Click(object sender, RoutedEventArgs e)
         {
-            CreateProductsWindow window = new CreateProductsWindow();
+            ShowProductsWindow window = new ShowProductsWindow();
             window.Show();
         }
     

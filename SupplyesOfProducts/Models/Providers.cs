@@ -3,36 +3,23 @@ using SupplyesOfProducts.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 
 namespace SupplyesOfProducts.Models
 {
-    public class Providers: IDataErrorInfo
+    public class Providers : IValidateModel
     {
+        [Key]
+        [Column("Id")]
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Products> ProductsList { get; set; }
-        public string this[string columnName]
-        {
-            get
-            {
-                string error = String.Empty;
-                switch (columnName)
-                {
-                    case "Name":
-                        if (String.IsNullOrEmpty(Name))
-                        {
-                            error = "Должно быть заполнено имя подрядчика";
-                        }
-                        break;
-                }
-                return error;
-            }
-        }
-
-        public string Error
-        {
-            get { throw new NotImplementedException(); }
-        }
+    
+        public ICollection<Products> Products { get; set; }
+        
+        [NotMapped]
+        public string Error { get; set; }
 
         public Providers()
         {
@@ -41,28 +28,16 @@ namespace SupplyesOfProducts.Models
         public Providers(string ProviderName)
         {
             this.Name = ProviderName;
-            ProductsList = new List<Products>();
         }
 
-        public void AddProvider(string ProviderName)
+        public bool ValidateModel()
         {
-            var db = new ApplicationContext();
-            Providers p = new Providers(ProviderName);        
-            db.Providers.Add(p);
-            db.SaveChanges();
-        }
+            Error = "";
 
-        public static ObservableCollection<Providers> GetProviders()
-        {
-            var providersList = new ObservableCollection<Providers>();
+            if (String.IsNullOrEmpty(Name))
+                Error = "Должен быть заполнен подрядчик";
 
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                foreach (var item in db.Providers)
-                    providersList.Add(item);
-            }
-
-            return providersList;
+            return string.IsNullOrEmpty(Error);
         }
 
     }
