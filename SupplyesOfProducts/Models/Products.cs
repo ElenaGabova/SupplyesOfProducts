@@ -12,7 +12,7 @@ namespace SupplyesOfProducts.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal FixPrice { get; set; }
+        public decimal? FixPrice { get; set; }
         public double FixWeight { get; set; }
 
         public int ProviderId { get; set; }
