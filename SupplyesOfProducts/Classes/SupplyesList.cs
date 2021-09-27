@@ -58,25 +58,22 @@ namespace SupplyesOfProducts.Classes
 
         public int DeleteSupply(Supplyes supply)
         {
-            // try
-            //{
-            Supplyes.Remove(supply);
-            var entry = db.Entry(supply);
-            entry.State = EntityState.Added;
-            //if (entry.State == EntityState.Detached)
-            //    db.Supplyes.Attach(supply);
+            try
+            {
+                Supplyes.Remove(supply);
+                var entry = db.Entry(supply);
+                entry.State = EntityState.Added;
 
-            db.Supplyes.Remove(supply);
-            db.Configuration.ValidateOnSaveEnabled = false;
-            // db.Database.ExecuteSqlCommand("DELETE FROM Supplyes where ID = " + supply.Id);
-            db.SaveChanges();
-            db.Configuration.ValidateOnSaveEnabled = true;
-            return 1;
-            //}
-            //catch
-            //{
-            //    return 0;
-            //}
+                db.Supplyes.Remove(supply);
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+                db.Configuration.ValidateOnSaveEnabled = true;
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }
