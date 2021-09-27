@@ -35,6 +35,8 @@ namespace SupplyesOfProducts.Views
         {
             CreateProductsWindow window = new CreateProductsWindow();
             window.Show();
+
+            productsGrid.ItemsSource = productsList.Products;
         }
 
         private void UpdateProduct_Click(object sender, RoutedEventArgs e)
@@ -42,6 +44,8 @@ namespace SupplyesOfProducts.Views
             var provider = productsGrid.SelectedItem as Products;
             CreateProductsWindow window = new CreateProductsWindow(provider, productsGrid.SelectedIndex);
             window.Show();
+
+            productsGrid.ItemsSource = productsList.Products;
         }
         private void DeleteProduct_Click(object sender, RoutedEventArgs e)
         {

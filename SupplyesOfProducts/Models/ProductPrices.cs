@@ -12,7 +12,7 @@ namespace SupplyesOfProducts.Models
         public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]
-        public Providers Product { get; set; }
+        public Products Product { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public decimal Price { get; set; }

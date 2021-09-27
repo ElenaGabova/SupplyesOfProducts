@@ -25,5 +25,7 @@
 
         <Button x:Name="AddProvider" Content="Подрядчики" Click="ShowProvider_Click" Grid.Column="1"/>
         <Button x:Name="AddProduct" Content="Виды продукции" Click="ShowProduct_Click" Grid.Row="1" Grid.Column="1"/>
+        <Button x:Name="AddSupply" Content="Поставки" Click="ShowSupply_Click" Grid.Row="2" Grid.Column="1"/>
+        <Button x:Name="ShowExcelSupply" Content="Выгрузить поставки в Excel" Click="ShowExcelSupply_Click" Grid.Row="3" Grid.Column="1"/>
     </Grid>
 </Window>

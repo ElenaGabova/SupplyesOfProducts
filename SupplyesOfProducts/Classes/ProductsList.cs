@@ -37,14 +37,14 @@ namespace SupplyesOfProducts.Classes
             }
         }
 
-        public void AddProduct(Providers provider, string productName, decimal FixPrice, int FixWeight)
+        public void AddProduct(Providers provider, string productName, decimal FixPrice, double FixWeight)
         {
             Products product = new Products(provider, productName, FixPrice, FixWeight);
             Products.Add(product);
             db.Products.Add(product);
             db.SaveChanges();
         }
-        public void UpdateProduct(int index, Providers provider, string productName, decimal FixPrice, int FixWeight)
+        public void UpdateProduct(int index, Providers provider, string productName, decimal FixPrice, double FixWeight)
         {
             Products[index].ProviderId = provider.Id;
             Products[index].Name = productName;

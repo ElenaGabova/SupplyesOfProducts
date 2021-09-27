@@ -52,17 +52,37 @@ namespace SupplyesOfProducts.Views
         {
             if (ValidateModel(sender, e))
             {
-                if (isNewModel)
-                    productsList.AddProduct(providersBox.SelectedItem as Providers, ProductName.Text, decimal.Parse(FixPrice.Text), int.Parse(FixWeight.Text));
-                else
-                    productsList.UpdateProduct(productIndex, providersBox.SelectedItem as Providers, ProductName.Text, decimal.Parse(FixPrice.Text), int.Parse(FixWeight.Text));
-            }
+                double fixWeight;
+                string FixWeightText = FixWeight.Text;
+                FixWeightText = FixWeightText.Replace('.', ',');
 
+                bool weightSucess = double.TryParse(FixWeightText, out fixWeight);
+
+                decimal fixPrice;
+                bool priceSucess = decimal.TryParse(FixPrice.Text, out fixPrice);
+
+                if (weightSucess && priceSucess)
+                {
+                    if (isNewModel)
+                        productsList.AddProduct(providersBox.SelectedItem as Providers, ProductName.Text, fixPrice, fixWeight);
+                    else
+                        productsList.UpdateProduct(productIndex, providersBox.SelectedItem as Providers, ProductName.Text, fixPrice, fixWeight);
+                }
+                else
+                {
+                    infoTextBlock.Text = "Введите корректное значение ";
+                    infoTextBlock.Text += !weightSucess ? " веса" : " цены";
+                    infoTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                    this.IsEnabled = true;
+                }
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            ShowProductsWindow window = new ShowProductsWindow();
+            window.InitializeComponent();
         }
 
         private bool ValidateModel(object sender, RoutedEventArgs e)

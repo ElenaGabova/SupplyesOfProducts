@@ -1,0 +1,27 @@
+﻿<Window x:Class="SupplyesOfProducts.Views.CreateDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SupplyesOfProducts.Views"
+        mc:Ignorable="d"
+        Title="Запрос даты" Height="150" Width="220">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Дата с" Padding="5"/>
+        <DatePicker x:Name="DateStart" Grid.Column="1" />
+        <TextBlock Text="Дата по"  Grid.Row="1" Padding="5"/>
+        <DatePicker x:Name="DateEnd" Grid.Row="1" Grid.Column="1"/>
+
+        <Button Content ="Сформировать отчет" Grid.Row="3" Grid.ColumnSpan="2" Click="ButtonClick"/>
+    </Grid>
+</Window>

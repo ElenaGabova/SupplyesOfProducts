@@ -5,7 +5,7 @@
     <Style x:Key="BlueStyle">
         <Setter Property="Control.Background" Value="LightSteelBlue"/>
         <Setter Property="Control.Margin" Value="2"/>
-        <Setter Property="Control.Padding" Value="1"/>
+        <Setter Property="Control.Padding" Value="3"/>
         <Style.Resources>
             <Style TargetType="Border">
                 <Setter Property="CornerRadius" Value="5" />
@@ -24,8 +24,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BlueStyle}">
-    </Style>
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BlueStyle}"/>
 
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BlueStyle}"/>
 

@@ -27,7 +27,7 @@ namespace SupplyesOfProducts.Models
         {
         }
 
-        public Products(Providers provider, string productName, decimal FixPrice, int FixWeight)
+        public Products(Providers provider, string productName, decimal FixPrice, double FixWeight)
         {
             this.Provider = null;
             this.ProviderId = provider.Id;
@@ -47,7 +47,7 @@ namespace SupplyesOfProducts.Models
             if (Provider is null)
                 Error = "Должен быть заполнен подрядчик";
 
-            if (FixPrice== 0)
+            if (FixPrice is null)
                 Error = "Должна быть заполнена цена по умолчанию";
 
             if (FixWeight == 0)

@@ -47,12 +47,18 @@
     <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.4.4\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -74,8 +80,15 @@
     <Compile Include="Classes\ProductsList.cs" />
     <Compile Include="Classes\ProvidersList.cs" />
     <Compile Include="Classes\IValidateModel.cs" />
+    <Compile Include="Classes\SupplyesList.cs" />
+    <Compile Include="Views\CreateDialogWindow.xaml.cs">
+      <DependentUpon>CreateDialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateProvidersWindow.xaml.cs">
       <DependentUpon>CreateProvidersWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateSupplyesWindow.xaml.cs">
+      <DependentUpon>CreateSupplyesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowProductsWindow.xaml.cs">
       <DependentUpon>ShowProductsWindow.xaml</DependentUpon>
@@ -86,7 +99,18 @@
     <Compile Include="Views\CreateProductsWindow.xaml.cs">
       <DependentUpon>CreateProductsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ShowSupplyesWindow.xaml.cs">
+      <DependentUpon>ShowSupplyesWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\CreateDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CreateProvidersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateSupplyesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,6 +127,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ShowProductsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowSupplyesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

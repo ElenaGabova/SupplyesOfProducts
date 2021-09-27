@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SupplyesOfProducts.Classes;
 using SupplyesOfProducts.Database;
-using SupplyesOfProducts.Models;
-using SupplyesOfProducts.Views;
 
 namespace SupplyesOfProducts.Views
 {
@@ -38,7 +38,18 @@ namespace SupplyesOfProducts.Views
             ShowProductsWindow window = new ShowProductsWindow();
             window.Show();
         }
-    
+        private void ShowSupply_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSupplyesWindow window = new ShowSupplyesWindow();
+            window.Show();
+        }
+
+        private void ShowExcelSupply_Click(object sender, RoutedEventArgs e)
+        {
+
+            CreateDialogWindow dialog = new CreateDialogWindow();
+            dialog.Show();
+        }
 
     }
 }
