@@ -3,6 +3,7 @@ using SupplyesOfProducts.Database;
 using SupplyesOfProducts.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,26 +29,25 @@ namespace SupplyesOfProducts.Views
         public ShowProvidersWindow()
         {
             InitializeComponent();
-
             ProvidersGrid.ItemsSource = providersList.Providers;
         }
 
         private void CreateProvider_Click(object sender, RoutedEventArgs e)
         {
-            CreateProvidersWindow window = new CreateProvidersWindow();
+            CreateProvidersWindow window = new CreateProvidersWindow(ProvidersGrid);
             window.Show();
         }
 
         private void UpdateProvider_Click(object sender, RoutedEventArgs e)
         {
             var provider = ProvidersGrid.SelectedItem as Providers;
-            CreateProvidersWindow window = new CreateProvidersWindow(provider, ProvidersGrid.SelectedIndex);
+            CreateProvidersWindow window = new CreateProvidersWindow(ProvidersGrid, provider, ProvidersGrid.SelectedIndex);
             window.Show();
         }
         private void DeleteProvider_Click(object sender, RoutedEventArgs e)
         { 
             var provider = ProvidersGrid.SelectedItem as Providers;
-            int result = providersList.DeleteProvider(provider);
+            int result = providersList.DeleteProvider(provider.Id);
             if (result == 0)
                 MessageBox.Show("Удаление невозможно! Есть связанные данные");
         }

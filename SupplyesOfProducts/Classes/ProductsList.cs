@@ -10,31 +10,28 @@ using System.Threading.Tasks;
 
 namespace SupplyesOfProducts.Classes
 {
-    class ProductsList {
+    /* Класс с методами для работы с таблицей Products
+    * Поля:
+    *      Products - список поставок
+    *      db - контекст базы данных для работы с таблицей Products
+    * 
+    * Методы:
+    *      AddProduct    - добавление продукта
+    *      UpdateProduct - обновление продукта
+    *      DeleteProduct - удаление продукта (с проверкой связанных данных)
+    */
 
-        private ObservableCollection<Products> products;
-        public ObservableCollection<Products> Products
-        {
-            get
-            {
-                return products;
-            }
-
-            private set
-            {
-                products = value;
-            }
-        }
-
+    class ProductsList 
+    {
+        public ObservableCollection<Products> Products { get; set; }
         private ApplicationContext db { get; set; } = new ApplicationContext();
 
         public ProductsList()
         {
             Products = new ObservableCollection<Products>();
+
             foreach (var item in db.Products.Include(p => p.Provider))
-            {
                 Products.Add(item);
-            }
         }
 
         public void AddProduct(Providers provider, string productName, decimal FixPrice, double FixWeight)
@@ -54,19 +51,17 @@ namespace SupplyesOfProducts.Classes
             db.SaveChanges();
 
         }
-        public int DeleteProduct(Products product)
+        public int DeleteProduct(int productID)
         {
             try 
             { 
-
-                Products.Remove(product);
-                var entry = db.Entry(product);
-                if (entry.State == EntityState.Detached)
-                    db.Products.Attach(product);
-
-                db.Products.Remove(product);
-                db.SaveChanges();
-
+                if (productID > 0)
+                {
+                    Products product = db.Products.Find(productID);
+                    db.Products.Remove(product);
+                    db.SaveChanges();
+                    Products.Remove(product); 
+                }
                 return 1;
             }
             catch

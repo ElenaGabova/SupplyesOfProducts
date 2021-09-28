@@ -2,6 +2,7 @@
 using SupplyesOfProducts.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,23 +22,29 @@ namespace SupplyesOfProducts.Views
     /// </summary>
     public partial class CreateProvidersWindow : Window
     {
-        public Providers provider;
-        ProvidersList providersList = new ProvidersList();
+        Providers provider;
+        ProvidersList providersList = new ProvidersList();   
+        DataGrid grid;
+
         bool isNewModel = true;
         int providerIndex = 0;
+     
 
-        public CreateProvidersWindow()
+        public CreateProvidersWindow(DataGrid grid)
         {
             provider = new Providers();
             this.DataContext = provider;
+            this.grid = grid;
             InitializeComponent();
         }
-        public CreateProvidersWindow(Providers p, int index)
+        public CreateProvidersWindow(DataGrid grid, Providers p, int index)
         {
             provider = p;
             this.DataContext = provider;
             isNewModel = false;
+            this.grid = grid;
             providerIndex = index;
+            
             InitializeComponent();
         }
 
@@ -50,7 +57,6 @@ namespace SupplyesOfProducts.Views
                 else
                     providersList.UpdateProvider(providerIndex, ProviderName.Text);
             }
-                
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -75,6 +81,10 @@ namespace SupplyesOfProducts.Views
             infoTextBlock.Foreground = new SolidColorBrush(textColor);
             return String.IsNullOrEmpty(error);
         }
-     
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            grid.ItemsSource = providersList.Providers;
+        }
     }
 }
