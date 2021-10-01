@@ -10,21 +10,20 @@ using System.Threading.Tasks;
 
 namespace SupplyesOfProducts.Classes
 {
+    /* Класс с методами для работы с таблицей Supplyes
+     * Поля:
+     *      Providers - список поставок
+     *      db - контекст базы данных для работы с таблицей Supplyes
+     * 
+     * Методы:
+     *      AddSupply    - добавление поставки
+     *      UpdateSupply - обновление поставки
+     *      DeleteSupply - удаление поставки (с проверкой связанных данных)
+     */
+
     class SupplyesList
     {
-        private ObservableCollection<Supplyes> supplyes;
-        public ObservableCollection<Supplyes> Supplyes
-        {
-            get
-            {
-                return supplyes;
-            }
-
-            private set
-            {
-                supplyes = value;
-            }
-        }
+        public ObservableCollection<Supplyes> Supplyes { get; set; }
 
         private ApplicationContext db { get; set; } = new ApplicationContext();
 
@@ -58,22 +57,25 @@ namespace SupplyesOfProducts.Classes
 
         public int DeleteSupply(Supplyes supply)
         {
-            try
-            {
-                Supplyes.Remove(supply);
-                var entry = db.Entry(supply);
-                entry.State = EntityState.Added;
+            // try
+            //{
+            Supplyes.Remove(supply);
+            var entry = db.Entry(supply);
+            entry.State = EntityState.Added;
+            //if (entry.State == EntityState.Detached)
+            //    db.Supplyes.Attach(supply);
 
-                db.Supplyes.Remove(supply);
-                db.Configuration.ValidateOnSaveEnabled = false;
-                db.SaveChanges();
-                db.Configuration.ValidateOnSaveEnabled = true;
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
+            db.Supplyes.Remove(supply);
+            db.Configuration.ValidateOnSaveEnabled = false;
+            // db.Database.ExecuteSqlCommand("DELETE FROM Supplyes where ID = " + supply.Id);
+            db.SaveChanges();
+            db.Configuration.ValidateOnSaveEnabled = true;
+            return 1;
+            //}
+            //catch
+            //{
+            //    return 0;
+            //}
         }
     }
 }
