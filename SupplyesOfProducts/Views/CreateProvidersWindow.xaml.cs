@@ -17,33 +17,41 @@ using System.Windows.Shapes;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для CreateProvidersWindow.xaml
-    /// </summary>
+    /* Класс с методами для работы с окном CreateProvidersWindow
+     * Поля:
+     *      provider - текущий поставщик
+     *      providersList - список всех поставщиков 
+     *      grid         - компонент для вывода списка поставщиков из БД
+     *      isNewModel   - флаг плказывает, форма для создания новой записи или изменения текущей
+     *      
+     * Методы:
+     *      CreateProvider_Click - создание или изменение поставки
+     *      ValidateModel      - проверка валидации входных данных
+     *      SetMessageText     - установка сообщения об ошибке, или изменении данных
+     *      Cancel_Click       - закрытие формы по кнопке отмена
+     *      Window_Closed      - закрытие формы
+     */
+
     public partial class CreateProvidersWindow : Window
     {
         Providers provider;
         ProvidersList providersList = new ProvidersList();   
         DataGrid grid;
-
         bool isNewModel = true;
-        int providerIndex = 0;
-     
 
-        public CreateProvidersWindow(DataGrid grid)
-        {
+        public CreateProvidersWindow()
+        {   InitializeComponent();
+           
             provider = new Providers();
             this.DataContext = provider;
-            this.grid = grid;
-            InitializeComponent();
         }
-        public CreateProvidersWindow(DataGrid grid, Providers p, int index)
+
+        public CreateProvidersWindow(Providers p, DataGrid grid)
         {
             provider = p;
             this.DataContext = provider;
             isNewModel = false;
             this.grid = grid;
-            providerIndex = index;
             
             InitializeComponent();
         }
@@ -55,31 +63,36 @@ namespace SupplyesOfProducts.Views
                 if (isNewModel)
                     providersList.AddProvider(ProviderName.Text);
                 else
-                    providersList.UpdateProvider(providerIndex, ProviderName.Text);
+                    providersList.UpdateProvider(provider.Id, ProviderName.Text);
             }
+        }
+
+        private bool ValidateModel(object sender, RoutedEventArgs e)
+        {
+            provider.ValidateModel();
+            var error = provider.Error;
+
+            string goodMessge = isNewModel ? "Создан новый подрядчик" : "Изменен подрядчик";
+
+            if (String.IsNullOrEmpty(error))
+                SetMessageText(sender, e, goodMessge, true);
+            else
+                SetMessageText(sender, e, error, false);
+            return String.IsNullOrEmpty(error);
+        }
+
+        private void SetMessageText(object sender, RoutedEventArgs e, string message, bool isInputCorrect = true)
+        {
+            var textColor = isInputCorrect ? Colors.Green : Colors.Red;
+            this.IsEnabled = !isInputCorrect;
+
+            infoTextBlock.Text = message;
+            infoTextBlock.Foreground = new SolidColorBrush(textColor);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private bool ValidateModel(object sender, RoutedEventArgs e)
-        {
-            var textColor = Colors.Red;
-            provider.ValidateModel();
-            var error = provider.Error;
-
-            if (String.IsNullOrEmpty(error))
-            {
-                textColor = Colors.Green;
-                this.IsEnabled = false;
-            }
-            string goodMessge = isNewModel ? "Создан новый подрядчик" : "Изменен подрядчик";
-
-            infoTextBlock.Text = String.IsNullOrEmpty(error) ? goodMessge : error;
-            infoTextBlock.Foreground = new SolidColorBrush(textColor);
-            return String.IsNullOrEmpty(error);
         }
 
         private void Window_Closed(object sender, EventArgs e)

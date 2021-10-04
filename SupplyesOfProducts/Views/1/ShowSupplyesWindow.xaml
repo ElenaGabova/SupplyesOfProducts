@@ -1,0 +1,41 @@
+﻿<Window x:Class="SupplyesOfProducts.Views.ShowSupplyesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SupplyesOfProducts.Views"
+        mc:Ignorable="d"
+        Title="ShowSupplyesWindow" Height="450" Width="400">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25" ></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid x:Name="supplyesGrid" Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" CanUserReorderColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="ProductColumn" Header="Вид продукции" Width="*" Binding="{Binding Product.Name}" />
+                <DataGridTextColumn  Header="Дата поставки" Width="*" Binding="{Binding DateStart , StringFormat={}{0:dd.MM.yyyy}}" />
+                <DataGridTextColumn  Header="Вес поставки" Width="*" Binding="{Binding Weight}" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <TextBlock Text="Общая цена поставки" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="AllSum"  Grid.Row="1" Grid.Column="1" Background="White" Foreground="Blue"/>
+        <TextBlock   x:Name="infoTextBlock" Grid.Row="2" Grid.ColumnSpan="7" Margin="5"/>
+
+        <Button x:Name="AddSupply" Content="Добавить" Grid.Row="3" Width="100" Height="25" Click="CreateSupply_Click"/>
+        <Button x:Name="UpdateSupply" Content="Изменить" Grid.Row="3" Grid.Column="1"  Width="100" Height="25" Click="UpdateSupply_Click"/>
+        <Button x:Name="DeleteSupply" Content="Удалить" Grid.Row="3" Grid.Column="2"  Width="100" Height="25" Click="DeleteSupply_Click"/>
+    </Grid>
+</Window>

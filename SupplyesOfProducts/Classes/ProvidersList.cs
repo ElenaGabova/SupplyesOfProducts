@@ -43,11 +43,15 @@ namespace SupplyesOfProducts.Classes
             db.SaveChanges();
         }
 
-        public void UpdateProvider(int index, string ProviderName)
+        public void UpdateProvider(int providerId, string ProviderName)
         {
-            Providers[index].Name = ProviderName;
-            db.Entry(Providers[index]).State = EntityState.Modified;
-            db.SaveChanges();
+            if (providerId > 0)
+            {
+                Providers provider = db.Providers.Find(providerId);
+                provider.Name = ProviderName;
+                db.Entry(provider).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         public int DeleteProvider(int providerId)

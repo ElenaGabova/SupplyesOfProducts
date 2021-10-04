@@ -5,7 +5,7 @@
     <Style x:Key="BlueStyle">
         <Setter Property="Control.Background" Value="LightSteelBlue"/>
         <Setter Property="Control.Margin" Value="2"/>
-        <Setter Property="Control.Padding" Value="3"/>
+        <Setter Property="Control.Padding" Value="1"/>
         <Style.Resources>
             <Style TargetType="Border">
                 <Setter Property="CornerRadius" Value="5" />

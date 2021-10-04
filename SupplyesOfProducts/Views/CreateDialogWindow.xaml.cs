@@ -19,9 +19,12 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для CreateDialogWindow.xaml
-    /// </summary>
+    /* Класс с методами для работы с окном CreateDialogWindow     
+    * Методы:
+    *      ButtonClick - показ окна с запросом параметров для формирование отчета
+    *      CreateExcelReport - формирование отчета
+    */
+
     public partial class CreateDialogWindow : Window
     {
         public CreateDialogWindow()
@@ -80,9 +83,14 @@ namespace SupplyesOfProducts.Views
                     sheet.Cells[i, 5] = supply.CalculatePrice();
                     i++;
                 }
+
+                sheet.Cells[i, 2] = "Общий вес поставок";
+                sheet.Cells[i, 3].Formulalocal = $"=СУММ(C3:C{i - 1})";
+
                 sheet.Cells[i, 4] = "Общая сумма поставок";
                 sheet.Cells[i, 5].Formulalocal = $"=СУММ(E3:E{i - 1})";
                 sheet.Cells[i, 5].Font.Color = ColorTranslator.ToOle(System.Drawing.Color.Red);
+
 
                 //закрашиваем названия столбцов
                 Excel.Range mainRange = sheet.Range[sheet.Cells[2, 1], sheet.Cells[2, 5]];

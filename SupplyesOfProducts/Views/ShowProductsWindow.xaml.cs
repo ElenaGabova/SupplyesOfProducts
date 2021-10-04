@@ -16,14 +16,18 @@ using System.Windows.Shapes;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для ShowProductsWindow.xaml
-    /// </summary>
+    /* Класс с методами для работы с окном ShowProductsWindow     
+    * Поля:
+    *      productsList - список поставок
+    * Методы:
+    *      CreateProduct_Click - показ окна для добавления поставки
+    *      UpdateProduct_Click - показ окна для обновления поставки
+    *      DeleteProduct_Click - удаление поставки
+    */
+
     public partial class ShowProductsWindow : Window
     {
-        Products products = new Products();
         ProductsList productsList = new ProductsList();
-        ProvidersList providerList = new ProvidersList();
 
         public ShowProductsWindow()
         {
@@ -41,18 +45,24 @@ namespace SupplyesOfProducts.Views
 
         private void UpdateProduct_Click(object sender, RoutedEventArgs e)
         {
-            var provider = productsGrid.SelectedItem as Products;
-            CreateProductsWindow window = new CreateProductsWindow(provider, productsGrid.SelectedIndex);
-            window.Show();
+            if (productsGrid.SelectedIndex > 0)
+            {
+                var provider = productsGrid.SelectedItem as Products;
+                CreateProductsWindow window = new CreateProductsWindow(provider, productsGrid);
+                window.Show();
 
-            productsGrid.ItemsSource = productsList.Products;
+                productsGrid.ItemsSource = productsList.Products;
+            }
         }
         private void DeleteProduct_Click(object sender, RoutedEventArgs e)
         {
-            var product = productsGrid.SelectedItem as Products;
-            int result = productsList.DeleteProduct(product);
-            if (result == 0)
-                MessageBox.Show("Удаление невозможно! Есть связанные данные");
+            if (productsGrid.SelectedIndex > 0)
+            {
+                var product = productsGrid.SelectedItem as Products;
+                int result = productsList.DeleteProduct(product.Id);
+                if (result == 0)
+                    MessageBox.Show("Удаление невозможно! Есть связанные данные");
+            }
         }
     }
 }

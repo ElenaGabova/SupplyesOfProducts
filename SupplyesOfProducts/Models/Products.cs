@@ -8,6 +8,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SupplyesOfProducts.Models
 {
+    /* Класс с описанием модели таблицы Products (реализует интерфейс IValidateModel)
+         * Поля:
+         *      Id - ид поставки
+         *      Name - название поставки
+         *      FixPrice - цена поставки по умолчанию
+         *      FixWeight - вес поставки по умолчанию
+         *      Error - ошибка в валдации модели
+         *      ProductPrice - список цен поставок
+         *      
+         * Методы:
+         *      ValidateModel - валидация модели
+    */
     public class Products: IValidateModel
     {
         public int Id { get; set; }

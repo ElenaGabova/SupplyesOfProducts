@@ -18,9 +18,14 @@ using SupplyesOfProducts.Database;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+    /* Класс с методами для работы с окном MainWindow    
+     * Методы:
+     *      ShowProvider_Click    - показ окна со списком подрядчиков
+     *      ShowProduct_Click     - показ окна со списком продуктов
+     *      ShowSupply_Click      - показ окна со списком поставок
+     *      ShowExcelSupply_Click - показ окна для формирования Excel отчета по поставкам
+     */
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -38,6 +43,12 @@ namespace SupplyesOfProducts.Views
             ShowProductsWindow window = new ShowProductsWindow();
             window.Show();
         }
+        private void ShowProductPrice_Click(object sender, RoutedEventArgs e)
+        {
+            ShowProductPricesWindow window = new ShowProductPricesWindow();
+            window.Show();
+        }
+
         private void ShowSupply_Click(object sender, RoutedEventArgs e)
         {
             ShowSupplyesWindow window = new ShowSupplyesWindow();
@@ -46,7 +57,6 @@ namespace SupplyesOfProducts.Views
 
         private void ShowExcelSupply_Click(object sender, RoutedEventArgs e)
         {
-
             CreateDialogWindow dialog = new CreateDialogWindow();
             dialog.Show();
         }

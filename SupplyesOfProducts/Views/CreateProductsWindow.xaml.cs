@@ -16,17 +16,30 @@ using SupplyesOfProducts.Models;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для Products.xaml
-    /// </summary>
+
+    /* Класс с методами для работы с окном CreateProductsWindow
+    * Поля:
+    *      product - текущий продукт
+    *      productsList - список всех продуктов
+    *      providersList - список всех поставщиков 
+    *      grid         - компонент для вывода списка продуктов из БД
+    *      isNewModel   - флаг плказывает, форма для создания новой записи или изменения текущей
+    *      
+    * Методы:
+    *      CreateProduct_Click - создание или изменение продукта
+    *      ValidateModel      - проверка валидации входных данных
+    *      SetMessageText     - установка сообщения об ошибке, или изменении данных
+    *      Cancel_Click       - закрытие формы по кнопке отмена
+    *      Window_Closed      - закрытие формы
+    */
+
     public partial class CreateProductsWindow : Window
     {
         Products product = new Products();
         ProductsList productsList = new ProductsList();
         ProvidersList providersList = new ProvidersList();
-
+        DataGrid grid;
         bool isNewModel = true;
-        int productIndex = 0;
 
         public CreateProductsWindow()
         {
@@ -36,16 +49,17 @@ namespace SupplyesOfProducts.Views
             providersBox.ItemsSource = providersList.Providers;
         }
 
-        public CreateProductsWindow(Products p, int index)
+        public CreateProductsWindow(Products product, DataGrid grid)
         {  
-            InitializeComponent();
-            product = p;
+            InitializeComponent();  
+            
             this.DataContext = product;
-            providersBox.ItemsSource = providersList.Providers;
-            providersBox.SelectedValue = p.Provider;
-            isNewModel = false;
-            productIndex = index;
-          
+            this.product     = product;
+            this.grid = grid;
+            isNewModel   = false;
+
+            providersBox.ItemsSource   = providersList.Providers;
+            providersBox.SelectedValue = providersList.Providers.Where(p => p.Id == product.ProviderId).First();
         }
 
         private void CreateProduct_Click(object sender, RoutedEventArgs e)
@@ -66,14 +80,14 @@ namespace SupplyesOfProducts.Views
                     if (isNewModel)
                         productsList.AddProduct(providersBox.SelectedItem as Providers, ProductName.Text, fixPrice, fixWeight);
                     else
-                        productsList.UpdateProduct(productIndex, providersBox.SelectedItem as Providers, ProductName.Text, fixPrice, fixWeight);
+                        productsList.UpdateProduct(product.Id, providersBox.SelectedItem as Providers, ProductName.Text, fixPrice, fixWeight);
                 }
                 else
                 {
-                    infoTextBlock.Text = "Введите корректное значение ";
-                    infoTextBlock.Text += !weightSucess ? " веса" : " цены";
-                    infoTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                    this.IsEnabled = true;
+                    string message = "Введите корректное значение ";
+                    message += !weightSucess ? " веса" : " цены";
+
+                    SetMessageText(sender, e, message, false);
                 }
             }
         }
@@ -87,22 +101,31 @@ namespace SupplyesOfProducts.Views
 
         private bool ValidateModel(object sender, RoutedEventArgs e)
         {
-            var textColor = Colors.Red;
-            product.Provider = (Providers) providersBox.SelectedItem;
             product.ValidateModel();
             var error = product.Error;
 
-            if (String.IsNullOrEmpty(error))
-            {
-                textColor = Colors.Green;
-                this.IsEnabled = false;
-            }
-
             string goodMessge = isNewModel ? "Создан новый вид продукции" : "Изменен вид продукции";
 
-            infoTextBlock.Text = error;
-            infoTextBlock.Foreground = new SolidColorBrush(textColor);
+            if (String.IsNullOrEmpty(error))
+               SetMessageText(sender, e, goodMessge, true);
+            else
+               SetMessageText(sender, e, error, false);
+
             return String.IsNullOrEmpty(error);
+        }
+
+        private void SetMessageText(object sender, RoutedEventArgs e, string message, bool isInputCorrect = true)
+        {
+            var textColor  = isInputCorrect ? Colors.Green : Colors.Red;
+            this.IsEnabled = !isInputCorrect;
+
+            infoTextBlock.Text = message;
+            infoTextBlock.Foreground = new SolidColorBrush(textColor);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            grid.ItemsSource = productsList.Products;
         }
     }
 }

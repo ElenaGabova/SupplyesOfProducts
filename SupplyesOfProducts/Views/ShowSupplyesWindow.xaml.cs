@@ -16,14 +16,21 @@ using System.Windows.Shapes;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для ShowSupplyesWindow.xaml
-    /// </summary>
+
+    /* Класс с методами для работы с окном ShowSupplyesWindow     
+    * Поля:
+    *      supply       - текущая поставка   
+    *      supplyesList - список поставок
+    * Методы:
+    *      CreateSupply_Click - показ окна для добавления поставки
+    *      UpdateSupply_Click - показ окна для обновления поставки
+    *      DeleteSupply_Click - удаление поставки
+    */
+
     public partial class ShowSupplyesWindow : Window
     {
         Supplyes supply = new Supplyes();
         SupplyesList supplyesList = new SupplyesList();
-        ProductsList productsList = new ProductsList();
 
         public ShowSupplyesWindow()
         {
@@ -45,14 +52,21 @@ namespace SupplyesOfProducts.Views
 
         private void UpdateSupply_Click(object sender, RoutedEventArgs e)
         {
-            var supply = supplyesGrid.SelectedItem as Supplyes;
-            CreateSupplyesWindow window = new CreateSupplyesWindow(supply, supplyesGrid.SelectedIndex);
-            window.Show();
+            if (supplyesGrid.SelectedIndex > 0)
+            {
+                var supply = supplyesGrid.SelectedItem as Supplyes;
+                CreateSupplyesWindow window = new CreateSupplyesWindow(supply, supplyesGrid);
+                window.Show();
+            }
         }
+
         private void DeleteSupply_Click(object sender, RoutedEventArgs e)
         {
-            var product = supplyesGrid.SelectedItem as Supplyes;
-            int result = supplyesList.DeleteSupply(supply);
+            if (supplyesGrid.SelectedIndex > 0)
+            {
+                var supply = supplyesGrid.SelectedItem as Supplyes;
+                int result = supplyesList.DeleteSupply(supply.Id);
+            }
         }
     }
 }

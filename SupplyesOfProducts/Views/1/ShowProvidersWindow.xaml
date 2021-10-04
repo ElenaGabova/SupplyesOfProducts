@@ -1,0 +1,34 @@
+﻿<Window x:Class="SupplyesOfProducts.Views.ShowProvidersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SupplyesOfProducts.Views"
+        mc:Ignorable="d"
+        Title="Подрядчики" Height="400" Width="390">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25" ></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+    
+        <DataGrid x:Name="ProvidersGrid" Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" CanUserReorderColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn  Header="Подрядчик" Width="*" Binding="{Binding Name}" />
+            </DataGrid.Columns>
+        </DataGrid>           
+        <TextBlock   x:Name="infoTextBlock" Grid.Row="1" Grid.ColumnSpan="7" Margin="5"/>
+        <Button x:Name="AddProvider" Content="Добавить" Grid.Row="2" Width="100" Height="25" Click="CreateProvider_Click"/>
+        <Button x:Name="UpadateProvider" Content="Изменить" Grid.Row="2" Grid.Column="1"  Width="100" Height="25" Click="UpdateProvider_Click"/>
+        <Button x:Name="DeleteProvider" Content="Удалить" Grid.Row="2" Grid.Column="2"  Width="100" Height="25" Click="DeleteProvider_Click"/>
+    </Grid>
+</Window>

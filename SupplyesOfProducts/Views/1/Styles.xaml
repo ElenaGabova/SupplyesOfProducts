@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SupplyesOfProducts.Views">
+
+    <Style x:Key="BlueStyle">
+        <Setter Property="Control.Background" Value="LightSteelBlue"/>
+        <Setter Property="Control.Margin" Value="2"/>
+        <Setter Property="Control.Padding" Value="1"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+
+    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BlueStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BlueStyle}"/>
+
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BlueStyle}"/>
+
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource BlueStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="DarkBlue"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="DarkBlue"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource BlueStyle}">
+        <Style.Resources>
+            <Style TargetType="DatePickerTextBox">
+                <Setter Property="Background" Value="LightSteelBlue" />
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+        </Style.Resources>
+
+    </Style>
+
+    
+</ResourceDictionary>

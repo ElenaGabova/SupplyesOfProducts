@@ -41,15 +41,18 @@ namespace SupplyesOfProducts.Classes
             db.Products.Add(product);
             db.SaveChanges();
         }
-        public void UpdateProduct(int index, Providers provider, string productName, decimal FixPrice, double FixWeight)
+        public void UpdateProduct(int productID, Providers provider, string productName, decimal FixPrice, double FixWeight)
         {
-            Products[index].ProviderId = provider.Id;
-            Products[index].Name = productName;
-            Products[index].FixPrice = FixPrice;
-            Products[index].FixWeight = FixWeight;
-            db.Entry(Products[index]).State = EntityState.Modified;
-            db.SaveChanges();
-
+            if (productID > 0)
+            {
+                Products product = db.Products.Find(productID);
+                product.ProviderId = provider.Id;
+                product.Name = productName;
+                product.FixPrice = FixPrice;
+                product.FixWeight = FixWeight;
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
         public int DeleteProduct(int productID)
         {

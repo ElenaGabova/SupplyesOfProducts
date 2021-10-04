@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupplyesOfProducts.Views"
         mc:Ignorable="d"
-        Title="Виды продукции" Height="400" Width="400">
+        Title="Создание вида продукции" Height="400" Width="400">
     <Window.Resources>
         <ResourceDictionary Source="Styles.xaml"/>
     </Window.Resources>
@@ -26,7 +26,7 @@
         <TextBlock Text="Подрядчик" Grid.Row="0" Grid.Column="0"/>
         <TextBlock Text="Вид продукции" Grid.Row="1" Grid.Column="0"/>
         <TextBlock Text="Цена по умолчанию" Grid.Row="2" Grid.Column="0"/>
-        <TextBlock Text="Вес по умолчанию (кг)" Grid.Row="3" Grid.Column="0"/>
+        <TextBlock Text="Вес для расчета цены (кг)" Grid.Row="3" Grid.Column="0"/>
         
         <ComboBox x:Name="providersBox"  Grid.Row="0" Grid.Column="1">
             <ComboBox.ItemTemplate>

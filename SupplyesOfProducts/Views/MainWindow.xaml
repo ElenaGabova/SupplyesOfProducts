@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupplyesOfProducts.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Прием поставок" Height="450" Width="800">
     <Window.Resources>
         <ResourceDictionary Source="Styles.xaml"/>
     </Window.Resources>
@@ -24,8 +24,9 @@
         </Grid.ColumnDefinitions>
 
         <Button x:Name="AddProvider" Content="Подрядчики" Click="ShowProvider_Click" Grid.Column="1"/>
-        <Button x:Name="AddProduct" Content="Виды продукции" Click="ShowProduct_Click" Grid.Row="1" Grid.Column="1"/>
-        <Button x:Name="AddSupply" Content="Поставки" Click="ShowSupply_Click" Grid.Row="2" Grid.Column="1"/>
-        <Button x:Name="ShowExcelSupply" Content="Выгрузить поставки в Excel" Click="ShowExcelSupply_Click" Grid.Row="3" Grid.Column="1"/>
+        <Button x:Name="AddProduct" Content="Виды продукции" Click="ShowProduct_Click" Grid.Row="1" Grid.Column="1"/>  
+        <Button x:Name="AddProductPrice" Content="Цены поставок" Click="ShowProductPrice_Click" Grid.Row="2" Grid.Column="1"/>
+        <Button x:Name="AddSupply" Content="Поставки" Click="ShowSupply_Click" Grid.Row="3" Grid.Column="1"/>
+        <Button x:Name="ShowExcelSupply" Content="Выгрузить поставки в Excel" Click="ShowExcelSupply_Click" Grid.Row="4" Grid.Column="1"/>
     </Grid>
 </Window>

@@ -9,6 +9,17 @@ using System.Data.Entity;
 
 namespace SupplyesOfProducts.Models
 {
+    /* Класс с описанием модели таблицы Providers (реализует интерфейс IValidateModel)
+         * Поля:
+         *      Id - ид поставщика
+         *      Name - название поставщика
+         *      Error - ошибка в валдации модели
+         *      Products - список поставок поставщика
+         *      
+         * Методы:
+         *      ValidateModel - валидация модели
+     */
+
     public class Providers : IValidateModel
     {
         [Key]

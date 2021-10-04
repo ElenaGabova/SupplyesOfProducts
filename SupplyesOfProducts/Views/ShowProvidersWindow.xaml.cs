@@ -18,12 +18,18 @@ using System.Windows.Shapes;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для CreateProvidersWindow.xaml
-    /// </summary>
+
+    /* Класс с методами для работы с окном ShowProvidersWindow     
+    * Поля:
+    *      providersList - список поставщиков
+    * Методы:
+    *      CreateProvider_Click - показ окна для добавления поставщиков
+    *      UpdateProvider_Click - показ окна для обновления поставщиков
+    *      DeleteProvider_Click - удвление поставщика
+    */
+
     public partial class ShowProvidersWindow : Window
     {
-        Providers providers = new Providers();
         ProvidersList providersList = new ProvidersList();
 
         public ShowProvidersWindow()
@@ -34,22 +40,28 @@ namespace SupplyesOfProducts.Views
 
         private void CreateProvider_Click(object sender, RoutedEventArgs e)
         {
-            CreateProvidersWindow window = new CreateProvidersWindow(ProvidersGrid);
+            CreateProvidersWindow window = new CreateProvidersWindow();
             window.Show();
         }
 
         private void UpdateProvider_Click(object sender, RoutedEventArgs e)
         {
-            var provider = ProvidersGrid.SelectedItem as Providers;
-            CreateProvidersWindow window = new CreateProvidersWindow(ProvidersGrid, provider, ProvidersGrid.SelectedIndex);
-            window.Show();
+            if (ProvidersGrid.SelectedIndex > 0)
+            {
+                var provider = ProvidersGrid.SelectedItem as Providers;
+                CreateProvidersWindow window = new CreateProvidersWindow(provider, ProvidersGrid);
+                window.Show();
+            }
         }
         private void DeleteProvider_Click(object sender, RoutedEventArgs e)
-        { 
-            var provider = ProvidersGrid.SelectedItem as Providers;
-            int result = providersList.DeleteProvider(provider.Id);
-            if (result == 0)
-                MessageBox.Show("Удаление невозможно! Есть связанные данные");
+        {
+            if (ProvidersGrid.SelectedIndex > 0)
+            {
+                var provider = ProvidersGrid.SelectedItem as Providers;
+                int result = providersList.DeleteProvider(provider.Id);
+                if (result == 0)
+                    MessageBox.Show("Удаление невозможно! Есть связанные данные");
+            }
         }
     }
 }

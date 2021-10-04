@@ -55,27 +55,23 @@ namespace SupplyesOfProducts.Classes
             Supplyes[index].CalculatePrice();
         }
 
-        public int DeleteSupply(Supplyes supply)
+        public int DeleteSupply(int supplyID)
         {
-            // try
-            //{
-            Supplyes.Remove(supply);
-            var entry = db.Entry(supply);
-            entry.State = EntityState.Added;
-            //if (entry.State == EntityState.Detached)
-            //    db.Supplyes.Attach(supply);
-
-            db.Supplyes.Remove(supply);
-            db.Configuration.ValidateOnSaveEnabled = false;
-            // db.Database.ExecuteSqlCommand("DELETE FROM Supplyes where ID = " + supply.Id);
-            db.SaveChanges();
-            db.Configuration.ValidateOnSaveEnabled = true;
-            return 1;
-            //}
-            //catch
-            //{
-            //    return 0;
-            //}
+            try
+            {
+                if (supplyID > 0)
+                {
+                    Supplyes supply = db.Supplyes.Find(supplyID);
+                    db.Supplyes.Remove(supply);
+                    db.SaveChanges();
+                    Supplyes.Remove(supply);
+                }
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

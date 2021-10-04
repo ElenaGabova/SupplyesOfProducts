@@ -16,18 +16,30 @@ using System.Windows.Shapes;
 
 namespace SupplyesOfProducts.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для CreateSupplyesWindow.xaml
-    /// </summary>
+    /* Класс с методами для работы с окном CreateSupplyesWindow
+    * Поля:
+    *      supply - текущая поставка
+    *      supplyesList - список всех поставок
+    *      productsList - список всех продуктов
+    *      grid         - компонент для вывода списка поставок из БД
+    *      isNewModel   - флаг плказывает, форма для создания новой записи или изменения текущей
+    *      
+    * Методы:
+    *      CreateSupply_Click - создание или изменение поставки
+    *      ValidateModel      - проверка валидации входных данных
+    *      SetMessageText     - установка сообщения об ошибке, или изменении данных
+    *      Cancel_Click       - закрытие формы по кнопке отмена
+    *      Window_Closed      - закрытие формы
+    */
+
     public partial class CreateSupplyesWindow : Window
     {
         Supplyes supply = new Supplyes();
         SupplyesList supplyesList = new SupplyesList();
         ProductsList productsList = new ProductsList();
-
+        DataGrid grid;
         bool isNewModel = true;
-        int supplyIndex = 0;
-
+        
         public CreateSupplyesWindow()
         {
             InitializeComponent();
@@ -36,18 +48,16 @@ namespace SupplyesOfProducts.Views
             productsBox.ItemsSource = productsList.Products;
         }
 
-        public CreateSupplyesWindow(Supplyes s, int index)
+        public CreateSupplyesWindow(Supplyes supply, DataGrid grid)
         {
             InitializeComponent();
-            supply = s;
-
             this.DataContext = supply;
-            productsBox.ItemsSource = productsList.Products;
-            productsBox.SelectedValue = s.Product;
-            DateStart.Text = s.DateStart.ToString();
+            this.grid = grid;
             isNewModel = false;
-            supplyIndex = index;
 
+            productsBox.ItemsSource = productsList.Products;
+            productsBox.SelectedValue = productsList.Products.Where(p => p.Id == supply.ProductId).First();;
+            DateStart.Text = supply.DateStart.ToString();
         }
 
         private void CreateSupply_Click(object sender, RoutedEventArgs e)
@@ -65,15 +75,38 @@ namespace SupplyesOfProducts.Views
                     if (isNewModel)
                         supplyesList.AddSupply(productsBox.SelectedItem as Products, DateTime.Parse(DateStart.Text), WeightValue);
                     else
-                        supplyesList.UpdateSupply(supplyIndex, productsBox.SelectedItem as Products, DateTime.Parse(DateStart.Text), WeightValue);
+                        supplyesList.UpdateSupply(supply.Id, productsBox.SelectedItem as Products, DateTime.Parse(DateStart.Text), WeightValue);
                 }
                 else
                 {
-                    infoTextBlock.Text = "Введите корректное значение веса";
-                    infoTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                    this.IsEnabled = true;
+                    string message = "Введите корректное значение веса";
+                    SetMessageText(sender, e, message, false);
                 }
             }
+        }
+
+        private bool ValidateModel(object sender, RoutedEventArgs e)
+        {
+            supply.ValidateModel();
+            var error = supply.Error;
+
+            string goodMessge = isNewModel ? "Создана новая поставка" : "Изменена поставка";
+
+            if (String.IsNullOrEmpty(error))
+                SetMessageText(sender, e, goodMessge, true);
+            else
+                SetMessageText(sender, e, error, false);
+
+            return String.IsNullOrEmpty(error);
+        }
+
+        private void SetMessageText(object sender, RoutedEventArgs e, string message, bool isInputCorrect = true)
+        {
+            var textColor = isInputCorrect ? Colors.Green : Colors.Red;
+            this.IsEnabled = !isInputCorrect;
+
+            infoTextBlock.Text = message;
+            infoTextBlock.Foreground = new SolidColorBrush(textColor);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -81,25 +114,9 @@ namespace SupplyesOfProducts.Views
             this.Close();
         }
 
-        private bool ValidateModel(object sender, RoutedEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            var textColor = Colors.Red;
-            supply.Product = (Products)productsBox.SelectedItem;
-            supply.DateStart = DateStart.SelectedDate;
-            supply.ValidateModel();
-            var error = supply.Error;
-
-            if (String.IsNullOrEmpty(error))
-            {
-                textColor = Colors.Green;
-                this.IsEnabled = false;
-            }
-
-            string goodMessge = isNewModel ? "Создана новая поставка" : "Изменена поставка";
-
-            infoTextBlock.Text = error;
-            infoTextBlock.Foreground = new SolidColorBrush(textColor);
-            return String.IsNullOrEmpty(error);
+            grid.ItemsSource = supplyesList.Supplyes;
         }
     }
 }

@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace SupplyesOfProducts.Models
 {
+    /* Интерфейс для проверки валидации IValidateModel
+     * Поля:
+     *      Error - ошибка
+     *      
+     * Методы:
+     *      ValidateModel - валидация модели
+     */
+
     interface IValidateModel
     {
         string Error { get; set; }
